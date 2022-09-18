@@ -4,7 +4,6 @@
     package="com.example.loginretrofit">
 
     <application
-        android:name=".LoginApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

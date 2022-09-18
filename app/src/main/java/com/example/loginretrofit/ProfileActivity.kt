@@ -3,7 +3,6 @@ package com.example.loginretrofit
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.toolbox.JsonObjectRequest
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.cursosandroidant.loginapirest.Support
@@ -27,7 +26,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val url = Constants.BASE_URL + Constants.API_PATH + Constants.USERS_PATH + Constants.TWO_PATH
 
-        val jsonObjectRequest = object : JsonObjectRequest(Method.GET, url, null, { response ->
+        /*val jsonObjectRequest = object : JsonObjectRequest(Method.GET, url, null, { response ->
             Log.i("response", response.toString())
 
             val gson = Gson()
@@ -53,7 +52,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        LoginApplication.reqResAPI.addToRequestQueue(jsonObjectRequest)
+        LoginApplication.reqResAPI.addToRequestQueue(jsonObjectRequest)*/
     }
     private fun updateUI(user: User, support: Support) {
         with(mBinding) {
