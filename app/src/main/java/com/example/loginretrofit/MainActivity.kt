@@ -12,10 +12,7 @@ import com.example.loginretrofit.retrofit.LoginService
 import com.example.loginretrofit.retrofit.UserInfo
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
 
@@ -62,7 +59,16 @@ class MainActivity : AppCompatActivity() {
                 updateUI("${Constants.TOKEN_PROPERTY}: ${result.token}")
             }
             catch (e: Exception){
-                updateUI(getString(R.string.main_error_response))
+                (e as? HttpException)?.let {
+                    when(it.code()){
+                        200 -> {
+                            updateUI(getString(R.string.main_error_server))
+                        }
+                        else -> {
+                            updateUI(getString(R.string.main_error_response))
+                        }
+                    }
+                }
             }
         }
 
