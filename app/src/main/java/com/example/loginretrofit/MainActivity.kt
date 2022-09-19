@@ -92,9 +92,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO){
             try {
                 val result = service.loginUser(UserInfo(email, password))
-                withContext(Dispatchers.Main){
-                    updateUI("${Constants.TOKEN_PROPERTY}: ${result.token}")
-                }
+                updateUI("${Constants.TOKEN_PROPERTY}: ${result.token}")
             }
             catch (e: Exception){
                 (e as? HttpException)?.let {
@@ -137,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         )*/
     }
 
-    private fun updateUI(result: String) {
+    private suspend fun updateUI(result: String) = withContext(Dispatchers.Main) {
         mBinding.tvResult.visibility = View.VISIBLE
         mBinding.tvResult.text = result
     }
