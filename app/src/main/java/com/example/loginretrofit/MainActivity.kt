@@ -10,7 +10,9 @@ import com.example.loginretrofit.databinding.ActivityMainBinding
 import com.example.loginretrofit.retrofit.LoginResponse
 import com.example.loginretrofit.retrofit.LoginService
 import com.example.loginretrofit.retrofit.UserInfo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -87,10 +89,12 @@ class MainActivity : AppCompatActivity() {
 
         val service = retrofit.create(LoginService::class.java)
 
-        lifecycleScope.launch{
+        lifecycleScope.launch(Dispatchers.IO){
             try {
                 val result = service.loginUser(UserInfo(email, password))
-                updateUI("${Constants.TOKEN_PROPERTY}: ${result.token}")
+                withContext(Dispatchers.Main){
+                    updateUI("${Constants.TOKEN_PROPERTY}: ${result.token}")
+                }
             }
             catch (e: Exception){
                 (e as? HttpException)?.let {
