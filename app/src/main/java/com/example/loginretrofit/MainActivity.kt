@@ -33,11 +33,45 @@ class MainActivity : AppCompatActivity() {
         }
 
         mBinding.btnLogin.setOnClickListener {
-            login()
+            if(mBinding.swType.isChecked)
+                login()
+            else
+                register()
         }
 
         mBinding.btnProfile.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
+        }
+    }
+
+    private fun register() {
+        val email = mBinding.etEmail.text.toString().trim()
+        val password = mBinding.etPassword.text.toString().trim()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(LoginService::class.java)
+        lifecycleScope.launch{
+            try {
+                val result = service.registerUser(UserInfo(email, password))
+                updateUI("${Constants.ID_PROPERTY}: ${result.id}, " +
+                        "${Constants.TOKEN_PROPERTY}: ${result.token}")
+            }
+            catch (e: Exception){
+                (e as? HttpException)?.let {
+                    when(it.code()){
+                        200 -> {
+                            updateUI(getString(R.string.main_error_server))
+                        }
+                        else -> {
+                            updateUI(getString(R.string.main_error_response))
+                        }
+                    }
+                }
+            }
         }
     }
 
