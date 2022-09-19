@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.cursosandroidant.loginapirest.Support
 import com.example.loginretrofit.databinding.ActivityProfileBinding
 import com.example.loginretrofit.retrofit.UserService
 import com.google.android.material.snackbar.Snackbar
